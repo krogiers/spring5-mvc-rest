@@ -3,6 +3,7 @@ package guru.springfamework.controllers.v1;
 import guru.springfamework.api.v1.model.CategoryDTO;
 import guru.springfamework.api.v1.model.CategoryListDTO;
 import guru.springfamework.service.CategoryService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,6 +17,7 @@ import java.util.List;
 @Slf4j
 //@Controller
 @RestController
+@Tag(name = "Category Actions", description = "This is a api to do some Category actions")
 @RequestMapping(CategoryController.BASE_URL)
 public class CategoryController {
     public static final String BASE_URL = "/api/v1/categories";
