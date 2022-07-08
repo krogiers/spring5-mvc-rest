@@ -1,8 +1,8 @@
 package guru.springframework.service;
 
 import guru.springframework.api.v1.mapper.CustomerMapper;
-import guru.springframework.model.CustomerDTO;
 import guru.springframework.domain.Customer;
+import guru.springframework.model.CustomerDTO;
 import guru.springframework.repositories.CustomerRepository;
 import org.apache.tomcat.util.digester.ArrayStack;
 import org.junit.jupiter.api.BeforeEach;
@@ -72,8 +72,13 @@ class CustomerServiceImplTest {
     @Test
     void createNewCustomer() {
         // Given
-        CustomerDTO customerDTO = CustomerDTO.builder().firstName(FIRST_NAME).lastName(LAST_NAME).build();
-        Customer savedCustomer = Customer.builder().id(ID).firstName(FIRST_NAME).lastName(LAST_NAME).build();
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstName(FIRST_NAME);
+        customerDTO.setLastName(LAST_NAME);
+        Customer savedCustomer = new Customer();
+        savedCustomer.setId(ID);
+        savedCustomer.setFirstName(FIRST_NAME);
+        savedCustomer.setLastName(LAST_NAME);
 
         when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
 
@@ -87,8 +92,13 @@ class CustomerServiceImplTest {
     @Test
     void saveCustomer() {
         // Given
-        CustomerDTO customerDTO = CustomerDTO.builder().firstName(FIRST_NAME).lastName(LAST_NAME).build();
-        Customer savedCustomer = Customer.builder().id(ID).firstName(FIRST_NAME).lastName(LAST_NAME).build();
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstName(FIRST_NAME);
+        customerDTO.setLastName(LAST_NAME);
+        Customer savedCustomer = new Customer();
+        savedCustomer.setId(ID);
+        savedCustomer.setFirstName(FIRST_NAME);
+        savedCustomer.setLastName(LAST_NAME);
 
         when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
 

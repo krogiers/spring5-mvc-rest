@@ -51,7 +51,6 @@
 					<sources>
 						<source>src/main/resources/xsd</source>
 					</sources>
-
 				</configuration>
 			</plugin>
 		</plugins>

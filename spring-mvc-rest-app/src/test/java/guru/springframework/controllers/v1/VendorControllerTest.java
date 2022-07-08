@@ -70,6 +70,7 @@ class VendorControllerTest {
 
         // When
         mockMvc.perform(get(VendorController.BASE_URL + "/1")
+                        .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -109,6 +110,7 @@ class VendorControllerTest {
     @Test
     void deleteVendor() throws Exception {
         mockMvc.perform(delete(VendorController.BASE_URL + "/1")
+                        .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }

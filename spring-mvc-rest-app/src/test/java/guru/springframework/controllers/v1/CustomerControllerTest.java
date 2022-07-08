@@ -1,6 +1,7 @@
 package guru.springframework.controllers.v1;
 
 import guru.springframework.model.CustomerDTO;
+import guru.springframework.model.ObjectFactory;
 import guru.springframework.service.CustomerService;
 import guru.springframework.service.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -47,8 +48,13 @@ class CustomerControllerTest {
     @Test
     void getCustomerDTOs() throws Exception {
         // Given
-        CustomerDTO custDTO1 = CustomerDTO.builder().firstName("first 1").lastName("last 1").build();
-        CustomerDTO custDTO2 = CustomerDTO.builder().firstName("first 2").lastName("last 2").build();
+        CustomerDTO custDTO1 = new CustomerDTO();
+        custDTO1.setFirstName("first 1");
+        custDTO1.setLastName("last 1");
+
+        CustomerDTO custDTO2 = new CustomerDTO();
+        custDTO2.setFirstName("first 2");
+        custDTO1.setLastName("last 2");
         List<CustomerDTO> customers = Arrays.asList(custDTO1, custDTO2);
 
         when (customerService.getAllCustomers()).thenReturn(customers);
@@ -64,11 +70,10 @@ class CustomerControllerTest {
     @Test
     void getCustomerByName() throws Exception {
         // Given
-        CustomerDTO custDTO1 = CustomerDTO.builder()
-                .firstName("first1")
-                .lastName("last1")
-                .customerURL(CustomerController.BASE_URL + "/1")
-                .build();
+        CustomerDTO custDTO1 = new CustomerDTO();
+        custDTO1.setFirstName("first1");
+        custDTO1.setLastName("last1");
+        custDTO1.setCustomerUrl(CustomerController.BASE_URL + "/1");
 
         when (customerService.getCustomerById(anyLong())).thenReturn(custDTO1);
 
@@ -93,8 +98,13 @@ class CustomerControllerTest {
 
     @Test
     void createCustomer() throws Exception {
-        CustomerDTO customerDTO = CustomerDTO.builder().firstName("Kurt").lastName("Rogiers").build();
-        CustomerDTO returnCustomerDTO = CustomerDTO.builder().firstName("Kurt").lastName("Rogiers").customerURL(CustomerController.BASE_URL + "/1").build();
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstName("Kurt");
+        customerDTO.setLastName("Rogiers");
+        CustomerDTO returnCustomerDTO = new CustomerDTO();
+        returnCustomerDTO.setFirstName("Kurt");
+        returnCustomerDTO.setLastName("Rogiers");
+        returnCustomerDTO.setCustomerUrl(CustomerController.BASE_URL + "/1");
 
         when(customerService.createNewCustomer(any(CustomerDTO.class))).thenReturn(returnCustomerDTO);
 
@@ -117,12 +127,24 @@ class CustomerControllerTest {
 
     @Test
     void updateCustomer() throws Exception {
-        CustomerDTO customerDTO = CustomerDTO.builder().firstName("Kurt").lastName("Rogiers").build();
-        CustomerDTO returnCustomerDTO = CustomerDTO.builder().firstName("Kurt").lastName("Rogiers").customerURL(CustomerController.BASE_URL + "/1").build();
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstName("Kurt");
+        customerDTO.setLastName("Rogiers");
+        CustomerDTO returnCustomerDTO = new CustomerDTO();
+        returnCustomerDTO.setFirstName("Kurt");
+        returnCustomerDTO.setLastName("Rogiers");
+        returnCustomerDTO.setCustomerUrl(CustomerController.BASE_URL + "/1");
 
         when(customerService.saveCustomer(anyLong(), any(CustomerDTO.class))).thenReturn(returnCustomerDTO);
 
         String response = mockMvc.perform(put(CustomerController.BASE_URL + "/1")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(customerDTO)))
+                .andReturn().getResponse().getContentAsString();
+        log.info(response);
+
+        mockMvc.perform(put(CustomerController.BASE_URL + "/1")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(customerDTO)))
@@ -141,8 +163,13 @@ class CustomerControllerTest {
 
     @Test
     void patchCustomer() throws Exception {
-        CustomerDTO customerDTO = CustomerDTO.builder().firstName("Kurt").lastName("Rogiers").build();
-        CustomerDTO returnCustomerDTO = CustomerDTO.builder().firstName("Kurt").lastName("Rogiers").customerURL(CustomerController.BASE_URL + "/1").build();
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstName("Kurt");
+        customerDTO.setLastName("Rogiers");
+        CustomerDTO returnCustomerDTO = new CustomerDTO();
+        returnCustomerDTO.setFirstName("Kurt");
+        returnCustomerDTO.setLastName("Rogiers");
+        returnCustomerDTO.setCustomerUrl(CustomerController.BASE_URL + "/1");
 
         when(customerService.saveCustomer(anyLong(), any(CustomerDTO.class))).thenReturn(returnCustomerDTO);
 
